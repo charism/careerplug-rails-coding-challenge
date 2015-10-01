@@ -9,14 +9,16 @@ gem 'jbuilder', '~> 2.0'
 gem 'formtastic'
 gem 'bootstrap-sass', '~> 3.3.5'
 gem 'formtastic-bootstrap'
+gem 'devise'
 
 group :development, :test do
+  gem 'sqlite3'
   gem 'byebug'
   gem 'spring'
-  gem 'sqlite3'
 end
 
 group :production do
   gem 'pg'
   gem 'rails_12factor'
 end
+
