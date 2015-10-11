@@ -1,8 +1,29 @@
 Rails.application.routes.draw do
-  devise_for :users
-  root 'jobs#index'
 
-  resources :jobs
+  devise_for :users, :path_names => { :sign_in => "login", :sign_out => "logout", :sign_up => "register" },
+                     :controllers => { registrations: 'registrations' }
+  
+  devise_scope :user do 
+
+    authenticated :user do
+      root 'jobs#index', as: :authenticated_root
+    end
+
+    unauthenticated do
+      root 'devise/sessions#new', as: :unauthenticated_root
+    end
+    
+  end
+  
+  #get 'post_job' =>   'jobs#new'
+  #get 'jobs'     =>   'jobs#index'
+  
+  #get '/post_job/:user_id', to 'jobs#new',   as  'post_job'
+  #get '/jobs/:user_id',     to 'jobs#index', as  'jobs'
+
+  resources :users do
+    resources :jobs
+  end
 
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
