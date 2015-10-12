@@ -1,2 +1,10 @@
-<h1>Jobs#show</h1>
-<p>Find me in app/views/jobs/show.html.erb</p>
+<h1><%= @job.name %></h1>
+<p><%= @job.description %></p>
+<div>
+  <h5>Status: <%= @job.status %></h5>
+  <h5>Employment Type: <%= @job.employment_type %></h5>
+</div>
+<div>
+  <li><%= link_to "Update", edit_user_job_path %></li>
+  <li><%= link_to "Delete", user_job_path, :method => :delete %></li>
+</div>

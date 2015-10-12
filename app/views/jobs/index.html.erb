@@ -1,5 +1,20 @@
 <h1>All jobs</h1>
-<% @jobs.each do |job| %>
-  <h4><%= job.name %></h4>
-  <p><%= job.description.html_safe %></p>
-<% end %>
+<table>
+  <tr>
+    <th><h3>Name</h3></th>
+    <th><h3>Description</h3></th>
+    <th><h3>Employment Type</h3></th>
+    <th><h3>Status</h2></th>
+  </tr>
+
+  <% @jobs.each do |job| %>
+  <tr>
+    <td><%= link_to job.name, user_job_path(user_id: job.user_id, id: job.id) %></td>
+    <td><%= job.description.html_safe %></td>
+    <td><%= job.employment_type %></td>
+    <td><%= job.status %></td>
+  </tr>
+  <% end %>
+
+</table>
+

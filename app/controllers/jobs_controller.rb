@@ -9,10 +9,11 @@ class JobsController < ApplicationController
 
   def new
     @job = Job.new
+    @form_submit_url_params  = {:action => "create", :user_id => params[:user_id] }
   end
 
   def create
-    @job = Job.new(permitted_params)
+    @job = Job.new(job_params)
     @job.user_id = current_user.id
     
     if @job.save
@@ -21,10 +22,34 @@ class JobsController < ApplicationController
       render :new
     end
   end
+  
+  def edit
+    @job = Job.find(params[:id] )
+    @form_submit_url_params  = {:action => "show", :id => @job.id, :user_id => @job.user_id }
+  end
+  
+  def update
+    @job = Job.find(params[:id] )
+    if @job.update_attributes(job_params)
+      redirect_to user_job_path, notice: 'Your job has been successfully updated.'
+    else
+      render :edit
+    end
+  end
+  
+  def show
+    @job = Job.find(params[:id])
+  end
+  
+  def destroy
+    Job.find(params[:id]).destroy
+    flash[:success] = "Job deleted"
+    redirect_to root_path
+  end
 
   private
 
-  def permitted_params
+  def job_params
     params.require(:job).permit(:name, :description, :status, :employment_type)
   end
 end

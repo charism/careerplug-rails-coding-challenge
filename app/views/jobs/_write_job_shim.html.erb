@@ -1,0 +1,15 @@
+<div class="row">
+  <div class="col-xs-12">
+    <%= semantic_form_for [:user, @job], :url => @form_submit_url_params do |f| %>
+      <%= f.inputs do %>
+        <%= f.input :name, value: @job.name %>
+        <%= f.input :description, value: @job.description %>
+        <%= f.input :status, as: :select, collection: Job.statuses.keys.map{ |et| [et.humanize, et] }, include_blank: false, value: @job.status %>
+        <%= f.input :employment_type, as: :select, collection: Job.employment_types.keys.map{ |et| [et.humanize, et] }, include_blank: false, value: @job.employment_type %>
+      <% end %>
+      <%= f.actions do %>
+        <%= f.action :submit, button_html: { class: 'btn btn-action' } %>
+      <% end %>
+    <% end %>
+  </div>
+</div>
