@@ -18,4 +18,8 @@ class Job < ActiveRecord::Base
   enum employment_type: [:full_time, :part_time]
 
   validates_presence_of :name, :description, :status, :employment_type, :user_id
+  
+  def self.search(uid, query)
+    Job.where(user_id: uid).where("name like ?", "%#{query}%")
+  end
 end

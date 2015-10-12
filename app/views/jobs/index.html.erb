@@ -1,4 +1,8 @@
-<h1>All jobs</h1>
+<h1>Jobs</h1>
+<div>
+  <h4><%= @jobs_info_message %></h4>
+  <%= button_to "Clear Search", user_jobs_path(current_user.id), method: "get" %>
+</div>
 <table>
   <tr>
     <th><h3>Name</h3></th>
@@ -13,6 +17,7 @@
     <td><%= job.description.html_safe %></td>
     <td><%= job.employment_type %></td>
     <td><%= job.status %></td>
+    <td><%= button_to "Add a Comment", user_jobs_path(current_user.id), method: "get" %></td>
   </tr>
   <% end %>
 

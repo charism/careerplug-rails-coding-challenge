@@ -4,7 +4,15 @@ class JobsController < ApplicationController
   include ApplicationHelper
   
   def index
-    @jobs = current_user.jobs
+    @user_id = current_user.id
+    
+    if params[:search] and not params[:search].empty?
+      @jobs = Job.search(@user_id, params[:search]).order("created_at DESC")
+      @jobs_info_message = "Showing all jobs matching search '#{params[:search]}' (#{@jobs.length})"
+    else
+      @jobs = current_user.jobs.order("created_at DESC")
+      @jobs_info_message = "Showing all jobs (#{@jobs.length})"
+    end
   end
 
   def new
