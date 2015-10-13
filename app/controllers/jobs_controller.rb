@@ -5,7 +5,7 @@ class JobsController < ApplicationController
   
   def index
     @user_id = current_user.id
-    
+      
     if params[:search] and not params[:search].empty?
       @jobs = Job.search(@user_id, params[:search]).order("created_at DESC")
       @jobs_info_message = "Showing all jobs matching search '#{params[:search]}' (#{@jobs.length})"
@@ -33,13 +33,23 @@ class JobsController < ApplicationController
   
   def edit
     @job = Job.find(params[:id] )
-    @form_submit_url_params  = {:action => "show", :id => @job.id, :user_id => @job.user_id }
+    respond_to do |format|
+      format.js
+      format.html {
+        @form_submit_url_params  = {:action => "show", :id => @job.id, :user_id => @job.user_id }
+      }
+    end
   end
   
   def update
     @job = Job.find(params[:id] )
     if @job.update_attributes(job_params)
-      redirect_to user_job_path, notice: 'Your job has been successfully updated.'
+      respond_to do |format|
+        format.js
+        format.html {
+          redirect_to user_job_path, notice: 'Your job has been successfully updated.'
+        }
+      end
     else
       render :edit
     end
@@ -58,6 +68,6 @@ class JobsController < ApplicationController
   private
 
   def job_params
-    params.require(:job).permit(:name, :description, :status, :employment_type)
+    params.require(:job).permit(:name, :description, :status, :employment_type, :comment)
   end
 end

@@ -1,0 +1,8 @@
+<%= semantic_form_for [:user, @job], :url => user_job_path(id: @job.id, user_id: current_user.id), :html => {:method => :patch}, remote: true do |f| %>
+  <%= f.inputs do %>
+    <%= f.input :comment, value: @job.comment, :input_html => { :class => 'autogrow'} %>
+  <% end %>
+  <%= f.actions do %>
+    <%= f.action :submit, button_html: { class: 'btn btn-action', value: "Add Comment" } %>
+  <% end %>
+<% end %>

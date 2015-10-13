@@ -1,21 +1,24 @@
 <nav class="navbar navbar-default">
   <div class="container">
     <div class="navbar-header">
-      <%= link_to "CareerPlug", root_path, class: "navbar-brand" %>
+      <%= link_to "CareerPlug", root_path, class: "navbar-brand", id: "logo" %>
     </div>
     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
       <ul class="nav navbar-nav">
       <% main_header_links.each do |text, path| %>
         <li> <%= link_to text, path %> </li>
       <% end %>
+      <% if user_signed_in? %>
+        <li> <%= render 'shared/search_shim' %> </li>
+      <% end %>
       </ul>
-    <%= render 'shared/search_shim' %>
+      <% if user_signed_in? %>
+      <div class="container" id="logout-link">
+        <ul class="nav navbar-nav">
+          <li> <%= link_to "Log Out", destroy_user_session_path, :method => :delete %> </li>
+        </ul>
+      </div>
+      <% end %>
     </div>
-    <% if user_signed_in? %>
-    <div class="navbar-header">
-      <ul class="nav navbar-nav">
-        <li> <%= link_to "Log Out", destroy_user_session_path, :method => :delete %> </li>
-      </ul>
-    </div>
-    <% end %>
+  </div>
 </nav>
